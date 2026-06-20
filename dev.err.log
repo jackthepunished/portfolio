@@ -1,0 +1,12 @@
+00:21:40 [ERROR] [config] Unable to read D:\bahadirdev\package.json
+  Stack trace:
+    at D:\bahadirdev\node_modules\vitefu\src\index.js:41:11
+    [...] See full stack trace in the browser, or rerun with --verbose.
+  Caused by:
+  Unexpected token '﻿', "﻿{
+  "name"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+
+00:21:40 [ERROR] Continuing with previous valid configuration
+

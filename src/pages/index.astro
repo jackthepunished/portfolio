@@ -1,0 +1,275 @@
+---
+import '../styles/global.css';
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href={base + "favicon-32.png"} />
+    <link rel="icon" type="image/png" sizes="16x16" href={base + "favicon-16.png"} />
+    <link rel="apple-touch-icon" sizes="180x180" href={base + "apple-touch-icon.png"} />
+    <script is:inline>
+  (function () {
+    document.documentElement.classList.add('js-typing');
+    var WORD = 'bahadir';
+    function start() {
+      var h1 = document.querySelector('h1.intro-title');
+      if (!h1) return;
+      var text = h1.querySelector('.intro-title__text');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) {
+        text.textContent = WORD;
+        h1.classList.add('is-shrunk');
+        document.documentElement.classList.remove('js-typing');
+        document.body.classList.add('intro-up');
+        var caret = h1.querySelector('.caret');
+        if (caret) { caret.classList.add('is-visible'); caret.classList.add('is-blinking'); }
+        return;
+      }
+      var i = 0;
+      function tick() {
+        text.textContent = WORD.slice(0, ++i);
+        h1.setAttribute('data-step', String((i - 1) % 4));
+        if (i < WORD.length) {
+          setTimeout(tick, 220 + Math.random() * 120);
+        } else {
+          // Restore the primary color slightly before the shrink starts
+          h1.classList.add('is-final');
+          h1.removeAttribute('data-step');
+          setTimeout(function () {
+            h1.classList.add('is-shrunk');
+            // Caret is hidden during writing + shrink. Reveal it once the
+            // shrink transition (0.7s) has fully completed, then start blinking.
+            setTimeout(function () {
+              var caret = h1.querySelector('.caret');
+              if (caret) { caret.classList.add('is-visible'); caret.classList.add('is-blinking'); }
+              document.documentElement.classList.remove('js-typing');
+              document.body.classList.add('intro-up');
+            }, 920);
+          }, 620);
+        }
+      }
+      requestAnimationFrame(function () { requestAnimationFrame(function () { document.documentElement.classList.remove('js-typing'); tick(); }); });
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
+  })();
+</script>
+    <title>bahadir</title>
+    <meta name="description" content="Bahadir Kosapinar builds systems, engines and tools. C++ and Rust." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/jackthepunished" />
+    <meta property="og:title" content="bahadir" />
+    <meta property="og:description" content="Bahadir Kosapinar builds systems, engines and tools. C++ and Rust." />
+    <meta property="og:image" content={base + "poster.jpg"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="bahadir" />
+    <meta name="twitter:description" content="Bahadir Kosapinar builds systems, engines and tools. C++ and Rust." />
+    <meta name="twitter:image" content={base + "poster.jpg"} />
+  </head>
+  <body>
+    <h1 class="intro-title" aria-label="bahadir"><span class="intro-title__text"></span><span class="caret" aria-hidden="true"></span></h1>
+
+    <p class="intro">Bahadir builds systems, engines and tools. A self-taught engineer working in C++ and Rust, focused on graphics, runtimes, and infrastructure.</p>
+
+    <p class="intro">Currently shipping game engines and distributed compute. Everything here is built from scratch as a way to learn how computers actually work.</p>
+
+    <ul>
+      <li>› <a class="live" href="https://github.com/jackthepunished/horizon-engine" target="_blank" rel="noopener">horizon-engine</a> &mdash; C++20 game engine, Vulkan deferred renderer, ECS</li>
+      <li>› <a class="live" href="https://github.com/jackthepunished/brokkr" target="_blank" rel="noopener">brokkr</a> &mdash; distributed build &amp; compute grid in Rust, REAPI v2</li>
+      <li>› <a class="live" href="https://github.com/jackthepunished/void" target="_blank" rel="noopener">void</a> &mdash; graph-based, infinitely zoomable knowledge OS in Rust</li>
+    </ul>
+
+    <h2>more</h2>
+    <ul>
+      <li>› <a class="live" href="https://github.com/jackthepunished/pelage-furr" target="_blank" rel="noopener">pelage-furr</a> &mdash; real-time D3D12 fur renderer with shell layers</li>
+      <li>› <a class="live" href="https://github.com/jackthepunished/VirtualNestVM" target="_blank" rel="noopener">VirtualNestVM</a> &mdash; a 16-bit virtual CPU written from scratch in C</li>
+      <li>› <a class="live" href="https://github.com/jackthepunished/webserver-project" target="_blank" rel="noopener">webserver-project</a> &mdash; a tiny TCP/HTTP server in C</li>
+      <li>› <a class="live" href="https://github.com/jackthepunished/option-converge" target="_blank" rel="noopener">option-converge</a> &mdash; C++ option pricing &amp; convergence toolkit</li>
+    </ul>
+
+    <div class="reel-thumb" id="reelThumb" role="button" style={"background-image:url(" + base + "poster.jpg)"} tabindex="0" aria-label="Play reel">
+      <video id="reelVideo" src={base + "reel.mp4"} poster={base + "poster.jpg"} muted loop autoplay playsinline preload="auto"></video>
+    </div>
+
+    <p class="hiring">Open to systems, engine, and infrastructure roles. Available for select consulting.</p>
+
+    <p>Contact:<br /><a class="live" href="https://github.com/jackthepunished" target="_blank" rel="noopener">github.com/jackthepunished</a><br /><a class="live" href="mailto:kosapinarbahadir@gmail.com">kosapinarbahadir@gmail.com</a></p>
+
+    <figure class="resume">
+      <button class="resume-thumb" id="resumeThumb" type="button" aria-label="Open resume"><img class="pdficon" src="/pdf.png" alt="PDF" /></button>
+      <figcaption><a href={base + "resume.pdf"} target="_blank" rel="noopener">resume.pdf</a> &middot; <a href={base + "resume.pdf"} download>download</a></figcaption>
+      <p class="copyright">&copy; 2026 Bahadir Kosapinar</p>
+    </figure>
+
+    <div class="reel-lightbox" id="reelLightbox" aria-hidden="true">
+      <div class="reel-backdrop" id="reelBackdrop"></div>
+      <div class="reel-stage" id="reelStage">
+        <div class="reel-controls">
+          <span class="reel-time" id="reelTime">0:00 / 0:00</span>
+          <span class="reel-actions">
+            <button class="reel-btn" id="reelMute" type="button">Mute</button>
+            <button class="reel-btn" id="reelRestart" type="button">Restart</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="resume-modal" id="resumeModal" aria-hidden="true">
+      <div class="resume-frame">
+        <img class="resume-img" id="resumeImg" alt="Resume" src={base + "resume.png"} />
+        <button class="resume-close" id="resumeClose" type="button" aria-label="Close">&times;</button>
+      </div>
+    </div>
+
+
+    <script is:inline>
+      (function () {
+        var thumb = document.getElementById('reelThumb');
+        var lb = document.getElementById('reelLightbox');
+        var backdrop = document.getElementById('reelBackdrop');
+        var stage = document.getElementById('reelStage');
+        var video = document.getElementById('reelVideo');
+        var timeEl = document.getElementById('reelTime');
+        var muteBtn = document.getElementById('reelMute');
+        var restartBtn = document.getElementById('reelRestart');
+        if (!thumb || !lb || !stage || !video) return;
+
+        var EASE = 'transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease, box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1)';
+        var SH_FULL = '0 20px 60px rgba(0, 0, 0, 0.25)';
+        function shadowAtCornerScale(scale) { var s = scale > 0.01 ? scale : 1; return '0 ' + (4 / s).toFixed(2) + 'px ' + (14 / s).toFixed(2) + 'px rgba(0, 0, 0, 0.1)'; }
+        var endHandler = null, safety = null, fadeRAF = null, unmuteTimer = null, unmuteHandler = null;
+        function clearUnmute() { if (unmuteHandler) { video.removeEventListener('seeked', unmuteHandler); unmuteHandler = null; } if (unmuteTimer) { clearTimeout(unmuteTimer); unmuteTimer = null; } }
+        function fadeVolume(from, to, duration) { if (fadeRAF) { cancelAnimationFrame(fadeRAF); fadeRAF = null; } var start = null; function step(ts) { if (start === null) start = ts; var t = duration > 0 ? Math.min(1, (ts - start) / duration) : 1; var v = from + (to - from) * t; try { video.volume = v < 0 ? 0 : (v > 1 ? 1 : v); } catch (e) {} if (t < 1) { fadeRAF = requestAnimationFrame(step); } else { fadeRAF = null; } } fadeRAF = requestAnimationFrame(step); }
+        function fmt(t) { if (!isFinite(t)) t = 0; var m = Math.floor(t / 60); var s = Math.floor(t % 60); return m + ':' + (s < 10 ? '0' : '') + s; }
+        function updateTime() { timeEl.textContent = fmt(video.currentTime) + ' / ' + fmt(video.duration); }
+        function clearHandlers() { if (endHandler) { video.removeEventListener('transitionend', endHandler); endHandler = null; } if (safety) { clearTimeout(safety); safety = null; } }
+        function deltaTransform(fromRect, toRect) { var scale = fromRect.width / toRect.width; var dx = (fromRect.left + fromRect.width / 2) - (toRect.left + toRect.width / 2); var dy = (fromRect.top + fromRect.height / 2) - (toRect.top + toRect.height / 2); return 'translate(' + dx + 'px, ' + dy + 'px) scale(' + scale + ')'; }
+        function resume() { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+        function open() {
+          if (lb.classList.contains('active')) return;
+          clearHandlers();
+          var corner = thumb.getBoundingClientRect();
+          var targetW = Math.min(window.innerWidth * 0.72, 980);
+          var target = { left: (window.innerWidth - targetW) / 2, top: (window.innerHeight - targetW * 9 / 16) / 2, width: targetW, height: targetW * 9 / 16 };
+          thumb.style.height = corner.height + 'px';
+          thumb.style.visibility = 'hidden';
+          stage.appendChild(video);
+          video.style.transition = 'none';
+          video.style.transform = deltaTransform(corner, target);
+          video.style.opacity = '1';
+          video.style.boxShadow = shadowAtCornerScale(corner.width / target.width);
+          void video.offsetWidth;
+          lb.classList.add('active');
+          lb.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+          requestAnimationFrame(function () {
+            backdrop.classList.add('show');
+            video.style.transition = EASE;
+            video.style.transform = 'none';
+            video.style.boxShadow = SH_FULL;
+          });
+          fadeVolume(0, 0.7, 600);
+          clearUnmute();
+          unmuteHandler = function () { video.muted = false; try { video.volume = 0.7; } catch (e) {} unmuteHandler = null; };
+          video.addEventListener('seeked', unmuteHandler);
+          unmuteTimer = setTimeout(function () { unmuteHandler && unmuteHandler(); }, 1200);
+          endHandler = function (e) { if (e.target === video && e.propertyName === 'transform') { lb.classList.add('controls-on'); clearHandlers(); } };
+          video.addEventListener('transitionend', endHandler);
+          safety = setTimeout(function () { lb.classList.add('controls-on'); clearHandlers(); }, 800);
+          resume();
+        }
+        function close() {
+          if (!lb.classList.contains('active')) return;
+          clearHandlers();
+          lb.classList.remove('controls-on');
+          var first = video.getBoundingClientRect();
+          var t = thumb.getBoundingClientRect();
+          var ratio = first.height / first.width;
+          var target = { left: t.left, top: t.top, width: t.width, height: t.width * ratio };
+          var s = target.width / first.width;
+          video.style.transition = 'none';
+          video.style.transform = 'none';
+          video.style.opacity = '1';
+          void video.offsetWidth;
+          requestAnimationFrame(function () {
+            video.style.transition = EASE;
+            video.style.transform = deltaTransform(target, first);
+            video.style.boxShadow = shadowAtCornerScale(s);
+            backdrop.classList.remove('show');
+          });
+          fadeVolume(video.volume, 0, 520);
+          var done = function () {
+            if (!lb.classList.contains('active')) return;
+            lb.classList.remove('active');
+            lb.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            video.style.transition = 'none';
+            video.style.transform = 'none';
+            video.style.opacity = '';
+            video.style.boxShadow = '';
+            thumb.appendChild(video);
+            thumb.style.height = '';
+            thumb.style.visibility = '';
+            if (fadeRAF) { cancelAnimationFrame(fadeRAF); fadeRAF = null; }
+            clearUnmute();
+            video.muted = true;
+            video.volume = 1;
+            resume();
+            clearHandlers();
+          };
+          endHandler = function (e) { if (e.target === video && e.propertyName === 'transform') done(); };
+          video.addEventListener('transitionend', endHandler);
+          safety = setTimeout(done, 750);
+        }
+        thumb.addEventListener('click', open);
+        thumb.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+        backdrop.addEventListener('click', close);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('active')) close(); });
+        muteBtn.addEventListener('click', function () { video.muted = !video.muted; muteBtn.textContent = video.muted ? 'Unmute' : 'Mute'; });
+        restartBtn.addEventListener('click', function () { video.currentTime = 0; resume(); });
+        video.addEventListener('timeupdate', updateTime);
+        video.addEventListener('loadedmetadata', updateTime);
+        function reelLive() { video.style.opacity = '1'; }
+        function reelStill() { if (lb.classList.contains('active')) return; video.style.opacity = '0'; }
+        video.style.opacity = '0';
+        video.addEventListener('playing', reelLive);
+        video.addEventListener('pause', reelStill);
+        video.addEventListener('ended', reelStill);
+        var pq = video.play();
+        if (pq && pq.catch) pq.catch(reelStill);
+        function resumeIfVisible() { if (document.visibilityState === 'visible' && video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); } }
+        document.addEventListener('visibilitychange', resumeIfVisible);
+
+        // Resume modal
+        (function () {
+          var modal = document.getElementById('resumeModal');
+          var thumb = document.getElementById('resumeThumb');
+          var closeBtn = document.getElementById('resumeClose');
+          if (!modal || !thumb) return;
+          function open() {
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+          function close() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          }
+          thumb.addEventListener('click', open);
+          if (closeBtn) closeBtn.addEventListener('click', close);
+          modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) close();
+          });
+        })();
+      })();
+    </script>
+  </body>
+</html>

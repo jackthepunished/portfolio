@@ -1,0 +1,90 @@
+23:53:27 [types] Generated 1ms
+
+ astro  v4.16.19 ready in 286 ms
+
+┃ Local    http://127.0.0.1:4321/
+
+23:53:28 watching for file changes...
+
+ update  ▶ New version of Astro available: 6.4.8
+  Run npx @astrojs/upgrade to update
+
+23:53:40 [200] / 6ms
+23:53:41 [200] / 2ms
+23:53:51 [200] / 2ms
+23:54:52 [200] / 2ms
+23:54:53 [200] / 1ms
+23:54:54 [200] / 2ms
+23:56:30 [watch] src/pages/index.astro
+23:56:30 [200] / 3ms
+23:56:30 [200] / 9ms
+23:56:37 [200] / 2ms
+23:57:48 [200] / 2ms
+23:59:15 [watch] /src/styles/global.css
+23:59:27 [watch] /src/styles/global.css
+23:59:40 [watch] src/pages/index.astro
+23:59:40 [200] / 3ms
+23:59:40 [200] / 5ms
+23:59:58 [200] / 1ms
+00:00:09 [200] / 1ms
+00:00:09 [200] / 2ms
+00:00:11 [200] / 2ms
+00:00:13 [200] / 1ms
+00:00:16 [200] / 1ms
+00:01:46 [watch] src/styles/global.css
+00:01:46 [200] / 2ms
+00:01:46 [200] / 1ms
+00:01:54 [watch] src/pages/index.astro
+00:01:55 [200] / 3ms
+00:01:55 [200] / 6ms
+00:03:00 [watch] src/pages/index.astro
+00:03:00 [200] / 3ms
+00:03:00 [200] / 5ms
+00:05:35 [200] / 2ms
+00:05:37 [200] / 1ms
+00:06:13 [watch] /src/styles/global.css
+00:06:23 [watch] src/pages/index.astro
+00:06:24 [200] / 2ms
+00:06:24 [200] / 1ms
+00:06:46 [200] / 1ms
+00:07:16 [watch] src/styles/global.css
+00:07:17 [200] / 3ms
+00:07:17 [200] / 4ms
+00:07:29 [watch] src/pages/index.astro
+00:07:29 [200] / 2ms
+00:07:29 [200] / 4ms
+00:08:14 [watch] /src/styles/global.css
+00:08:19 [200] / 2ms
+00:08:52 [watch] src/styles/global.css
+00:08:52 [200] / 1ms
+00:08:53 [200] / 2ms
+00:12:00 [watch] /src/styles/global.css
+00:12:41 [200] / 1ms
+00:12:53 [watch] src/pages/index.astro
+00:12:54 [200] / 2ms
+00:12:54 [200] / 2ms
+00:13:34 [200] / 1ms
+00:16:12 [watch] src/pages/index.astro
+00:16:12 [200] / 2ms
+00:16:12 [200] / 3ms
+00:16:25 [watch] src/styles/global.css
+00:16:25 [200] / 2ms
+00:16:25 [200] / 2ms
+00:16:39 [watch] src/pages/index.astro
+00:16:39 [200] / 2ms
+00:16:39 [200] / 1ms
+00:17:14 [watch] /src/styles/global.css
+00:20:15 Configuration file updated. Restarting...
+00:20:15 [types] Generated 1ms
+00:20:15 [200] / 4ms
+00:20:15 [200] / 5ms
+00:20:40 Configuration file updated. Restarting...
+00:20:40 [types] Generated 1ms
+00:20:40 [vite] Re-optimizing dependencies because lockfile has changed
+00:20:40 [200] / 3ms
+00:20:40 [200] / 4ms
+00:21:13 [watch] src/pages/index.astro
+00:21:13 [200] / 2ms
+00:21:13 [200] / 1ms
+00:21:25 [watch] /src/styles/global.css
+00:21:40 Configuration file updated. Restarting...
