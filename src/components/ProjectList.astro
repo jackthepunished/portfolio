@@ -1,0 +1,26 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  projects: Project[];
+  reveal?: boolean;
+}
+
+const { projects, reveal = false } = Astro.props;
+---
+<ul data-anim="project-list" data-reveal={reveal ? '' : undefined}>
+  {
+    projects.map((p) => (
+      <li>
+        › <a
+          class="live"
+          data-cursor="link"
+          data-scramble={p.name}
+          href={p.href}
+          target="_blank"
+          rel="noopener"
+        >{p.name}</a> — {p.blurb}
+      </li>
+    ))
+  }
+</ul>

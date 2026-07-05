@@ -1,0 +1,30 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+<section class="showcase" data-showcase aria-label="Featured projects">
+  <div class="showcase__track" data-showcase-track>
+    <div class="card card--intro">
+      <span class="showcase__label">featured</span>
+      <span class="showcase__hint" aria-hidden="true">scroll →</span>
+    </div>
+    {
+      projects.map((p, i) => (
+        <article class="card">
+          <span class="card__idx">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="card__name">
+            <a class="live" data-cursor="link" data-scramble={p.name} href={p.href} target="_blank" rel="noopener">
+              {p.name}
+            </a>
+          </h3>
+          <p class="card__blurb">{p.blurb}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>

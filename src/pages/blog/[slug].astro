@@ -1,0 +1,34 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+
+const fmt = (d: Date) => `${d.getFullYear()} · ${String(d.getMonth() + 1).padStart(2, '0')}`;
+---
+<Base title={post.data.title + ' · bahadir'} description={post.data.excerpt}>
+  <section class="section col blog-article">
+    <a class="live back" data-cursor="link" href={base + 'blog'}>← blog</a>
+
+    <img class="blog-article__cover" src={base + 'images/' + post.data.cover} alt="" data-reveal />
+
+    <span class="blog-article__date" data-reveal>{fmt(post.data.date)}</span>
+    <h1 class="blog-article__title" data-reveal>{post.data.title}</h1>
+
+    <div class="prose" data-reveal>
+      <Content />
+    </div>
+  </section>
+</Base>

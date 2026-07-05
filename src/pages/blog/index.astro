@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const fmt = (d: Date) => `${d.getFullYear()} · ${String(d.getMonth() + 1).padStart(2, '0')}`;
+---
+<Base title="blog · bahadir" description="Notes on graphics, engines, and whatever I'm building at the moment.">
+  <section class="section col blog-index">
+    <a class="live back" data-cursor="link" href={base}>← bahadir</a>
+    <h1 class="blog-index__title" data-reveal>blog</h1>
+
+    <ul class="blog-list">
+      {
+        posts.map((post) => (
+          <li class="blog-post" data-reveal>
+            <a class="blog-post__link" data-cursor="link" href={base + 'blog/' + post.slug}>
+              <img
+                class="blog-post__cover"
+                src={base + 'images/' + post.data.cover}
+                alt=""
+                loading="lazy"
+              />
+              <div class="blog-post__meta">
+                <span class="blog-post__date">{fmt(post.data.date)}</span>
+                <h2 class="blog-post__title" data-scramble={post.data.title}>{post.data.title}</h2>
+                <p class="blog-post__excerpt">{post.data.excerpt}</p>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

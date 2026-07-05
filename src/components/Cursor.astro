@@ -1,0 +1,9 @@
+---
+// Custom cursor host. Only activated by scripts/init/cursor.ts under
+// (hover:hover) + (pointer:fine) + no-preference; otherwise it stays invisible
+// and the native cursor is used.
+---
+<div class="cursor" aria-hidden="true">
+  <div class="cursor__ring" data-cursor-ring></div>
+  <div class="cursor__dot" data-cursor-dot></div>
+</div>

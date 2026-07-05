@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Cursor from '../components/Cursor.astro';
+
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'bahadir',
+  description = 'Bahadir Kosapinar — CS student building renderers, engines and systems in C++ and Rust, headed for infrastructure and engines',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href={base + 'favicon-32.png'} />
+    <link rel="icon" type="image/png" sizes="16x16" href={base + 'favicon-16.png'} />
+    <link rel="apple-touch-icon" sizes="180x180" href={base + 'apple-touch-icon.png'} />
+    <!-- Preload the primary + display faces so the first paint isn't unstyled. -->
+    <link rel="preload" href={base + 'fonts/MEKSans-Regular.woff2'} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={base + 'fonts/DINASTI-Regular.otf'} as="font" type="font/otf" crossorigin />
+    <!-- Runs before paint: proves JS is live so CSS can safely pre-hide animated
+         content. With no JS the class is absent and everything renders normally. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/jackthepunished" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={base + 'poster.jpg'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={base + 'poster.jpg'} />
+  </head>
+  <body>
+    <!-- Ambient ASCII vortex backdrop (vortex.ts). Fixed behind all content. -->
+    <canvas class="vortex-bg" data-vortex aria-hidden="true"></canvas>
+
+    <!-- Scroll-progress indicator (driven by progress.ts). -->
+    <div class="progress" aria-hidden="true"><span class="progress__bar" data-progress-bar></span></div>
+
+    <!-- ScrollSmoother requires exactly this wrapper/content nesting; everything
+         scrollable lives inside #smooth-content. -->
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <slot />
+      </div>
+    </div>
+
+    <!-- Fixed overlays MUST sit outside #smooth-content or ScrollSmoother's
+         transform breaks their fixed positioning. -->
+    <slot name="fixed" />
+    <Cursor />
+
+    <script>import '../scripts/main.ts';</script>
+  </body>
+</html>

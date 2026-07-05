@@ -1,0 +1,13 @@
+---
+// Blog button (fixed top-right). Mirrors the résumé thumb's little-card treatment
+// but is a plain link to the blog index. IDs/classes kept parallel to .resume-thumb.
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+---
+<a class="blog-btn" href={base + 'blog'} data-reveal data-cursor="link" aria-label="Read the blog">
+  <!-- The <a> stays put as the hover/hit area; the card flies to centre on hover
+       so the pointer keeps :hover over the anchor (no flicker). -->
+  <span class="blog-btn__card">
+    <img class="blog-btn__img" src={base + 'blog-button.png'} alt="" loading="lazy" />
+    <span class="blog-btn__badge">blog</span>
+  </span>
+</a>

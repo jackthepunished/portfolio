@@ -1,0 +1,23 @@
+---
+// Resume thumbnail (fixed bottom-left) + fullscreen modal. Animation handled by
+// scripts/init/resume.ts (GSAP timeline). IDs preserved.
+const base = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+---
+<figure class="resume" data-reveal>
+  <button class="resume-thumb" id="resumeThumb" type="button" data-cursor="link" data-magnetic="lift" aria-label="Open resume">
+    <img class="resume-thumb__page" src={base + 'resume.png'} alt="Resume preview" loading="lazy" />
+    <span class="resume-thumb__badge">résumé</span>
+  </button>
+  <figcaption>
+    <a href={base + 'resume.pdf'} data-cursor="link" target="_blank" rel="noopener">resume.pdf</a> ·
+    <a href={base + 'resume.pdf'} data-cursor="link" download>download</a>
+  </figcaption>
+  <p class="copyright">© 2026 Bahadir Kosapinar</p>
+</figure>
+
+<div class="resume-modal" id="resumeModal" aria-hidden="true">
+  <div class="resume-frame">
+    <img class="resume-img" id="resumeImg" alt="Resume" src={base + 'resume.png'} />
+    <button class="resume-close" id="resumeClose" type="button" data-cursor="link" aria-label="Close">×</button>
+  </div>
+</div>

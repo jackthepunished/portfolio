@@ -1,57 +1,122 @@
-/* internetlabs.co — clone */
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+/* Local fonts. Served from public/ at the site base (/portfolio/). MEKsans is
+   the primary text face (a pixel sans); DINASTI is the secondary display face. */
+@font-face {
+  font-family: "MEKsans";
+  src: url("/portfolio/fonts/MEKSans-Regular.woff2") format("woff2"),
+       url("/portfolio/fonts/MEKSans-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DINASTI";
+  src: url("/portfolio/fonts/DINASTI-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "DINASTI";
+  src: url("/portfolio/fonts/DINASTI-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
-  --fg: #000;
-  --muted: #666;
+  --fg: #111;
+  --ink: #2c2c31;
+  --muted: #6a6a72;
   --link: #1a52e0;
-  --bg: #fff;
-  --container: 480px;
+  --bg: #fdfdfc;
+  --container: 560px;
   --gutter: 24px;
-  --serif: "Pixelify Sans", sans-serif;
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* Primary = MEKsans (all text); secondary = DINASTI (display headings). */
+  --sans: "MEKsans", ui-monospace, Menlo, Consolas, monospace;
+  --display: "DINASTI", "MEKsans", sans-serif;
+  --mono: var(--sans);
 }
 
 * { box-sizing: border-box; }
 
+html {
+  background: var(--bg);
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.6;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
   font-weight: normal;
   text-align: left;
-  letter-spacing: -0.2px;
+  letter-spacing: 0;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
-body {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: calc(var(--gutter) + 24px) var(--gutter) var(--gutter);
+/* Transparent so the ASCII vortex canvas (behind it) shows through; the page
+   background lives on <html>. */
+body { overflow-x: hidden; background: transparent; }
+
+/* Ambient ASCII vortex backdrop: fixed to the viewport, behind all content but
+   above the page background, never interactive. */
+.vortex-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
 }
 
+/* ScrollSmoother containers (plain divs until JS enhances them). */
+#smooth-content { padding: 72px 0 60px; }
+
+/* Narrow reading column; sections breathe vertically. The full-bleed showcase
+   opts out of .col so it can span the viewport. */
+.col {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+.section { padding: 26px 0; }
+.section:first-of-type { padding-top: 4px; }
+
 h1, h2 {
-  font-size: 16px;
   font-weight: normal;
-  letter-spacing: normal;
   color: var(--fg);
 }
 
 h1 {
   margin: 0 0 20px;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 22px;
   color: var(--fg);
 }
 
-h2 { margin: 0 0 22px; }
+/* Section label: small, tracked-out mono with a hairline, reads as a divider. */
+h2 {
+  margin: 0 0 18px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(0,0,0,0.12);
+}
 
-p { margin: 0 0 26px; max-width: 360px; }
+p { margin: 0 0 16px; max-width: 460px; }
 
 hr {
   border: none;
@@ -61,15 +126,78 @@ hr {
 }
 
 ul { list-style: none; padding-left: 0; margin: 0; }
-li { margin-bottom: 7px; }
+li { margin-bottom: 9px; max-width: 460px; }
 
-a { color: var(--link); text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* Animated underline: grows from the left on hover; .live shows it by default. */
+a {
+  color: var(--link);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+a:hover { background-size: 100% 1px; }
+a.live { background-size: 100% 1px; }
+.inactive { color: var(--link); background-image: none; cursor: default; }
 
-.live { text-decoration: underline; }
-.inactive { color: var(--link); text-decoration: none; cursor: default; }
+/* Centred hero statement under the wordmark + lede on the first screen. */
+.intro {
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.55;
+  color: var(--ink);
+}
 
-.intro { max-width: 360px; }
+/* Closing statement: a framed monochrome plate above a centred MEKsans epigraph.
+   The vortex fades out as this scrolls into view, leaving just the plate + line. */
+.closing {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 80px var(--gutter);
+  text-align: center;
+}
+/* The image as a contained "print": thin border + soft shadow, same card
+   language as the résumé/blog thumbnails. */
+.closing__plate {
+  margin: 0;
+  width: min(680px, 100%);
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 6px;
+  overflow: hidden;
+  line-height: 0;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+}
+.closing__img { display: block; width: 100%; height: auto; }
+.closing__quote {
+  max-width: 20ch;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(24px, 3.8vw, 44px);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  color: var(--fg);
+}
+
+/* Hero lede: the role line sitting under the wordmark, centered near the top. */
+.lede {
+  max-width: none;
+  margin: 0 auto 28px;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
 /* Resume thumbnail (bottom-left) */
 .resume {
@@ -82,30 +210,106 @@ a:hover { text-decoration: underline; }
   z-index: 20;
 }
 .resume-thumb {
+  position: relative;
   display: block;
-  width: 64px;
+  width: 66px;
   height: 88px;
+  overflow: hidden;
   background: var(--bg);
-  border: 1px solid var(--fg);
+  border: 1px solid rgba(0,0,0,0.14);
   border-radius: 6px;
   padding: 0;
   margin: 0;
   cursor: pointer;
   line-height: 0;
   transform-origin: bottom left;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease;
+}
+.resume-thumb:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(0,0,0,0.20); }
+/* Show the top of the actual résumé page, cropped into a little document card. */
+.resume-thumb__page {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+.resume-thumb__badge {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 4px 0 3px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #fff;
+  background: rgba(20,20,20,0.82);
+  line-height: 1.2;
+}
+.resume figcaption { margin-top: 10px; margin-left: -1px; font-size: 12.5px; line-height: 1.6; white-space: nowrap; }
+
+/* Blog button (top-right). The <a> is a fixed, transparent hit-area that never
+   moves — so hovering it can fly the inner card to screen centre without the
+   pointer losing :hover (which would flicker). */
+.blog-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 20;
+  display: block;
+  width: 160px;
+  height: 160px;
+  line-height: 0;
+}
+.blog-btn__card {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(0,0,0,0.14);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  transform-origin: center center;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
   will-change: transform;
 }
-.resume-thumb img { display: block; width: 28px; height: 28px; margin: 18px auto 0; }
-@media (hover: hover) and (pointer: fine) {
-  .resume:hover .resume-thumb { transform: scale(1.035); box-shadow: 0 8px 22px rgba(0,0,0,0.14); }
+.blog-btn__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
-.resume figcaption { margin-top: 8px; margin-left: -2px; font-size: 13px; line-height: 1.6; white-space: nowrap; }
-.resume figcaption a { text-decoration: underline; }
-.pdficon { width: 24px; height: auto; vertical-align: -7px; margin-right: 6px; }
+.blog-btn__badge {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 6px 0 5px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: #fff;
+  background: rgba(20,20,20,0.82);
+  line-height: 1.2;
+}
 
-/* Resume fullscreen modal */
+/* Hover (fine-pointer) only: card flies to the centre + expands, page blurs.
+   Centre maths: the card's centre rests at (100vw − 104px, 104px) — 24px inset
+   + 80px half-width — so translating by (−50vw + 104px, 50vh − 104px) lands its
+   centre at the viewport centre before the scale. */
+@media (hover: hover) and (pointer: fine) {
+  .blog-btn:hover { z-index: 65; }
+  .blog-btn:hover .blog-btn__card {
+    transform: translate(calc(-50vw + 104px), calc(50vh - 104px)) scale(3);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+  body:has(.blog-btn:hover) > *:not(.blog-btn):not(.cursor):not(.progress) {
+    filter: blur(4px) opacity(0.55);
+  }
+}
+
+/* Resume fullscreen modal — visibility/opacity driven by GSAP (resume.ts) */
 .resume-modal {
   position: fixed; inset: 0; z-index: 60;
   display: flex;
@@ -114,13 +318,6 @@ a:hover { text-decoration: underline; }
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.22s ease, visibility 0s linear 0.22s;
-}
-.resume-modal.active {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 0.22s ease, visibility 0s linear 0s;
 }
 .resume-frame {
   position: relative;
@@ -130,13 +327,6 @@ a:hover { text-decoration: underline; }
   border-radius: 10px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   overflow: hidden;
-  transform: translateY(24px) scale(0.97);
-  opacity: 0;
-  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
-}
-.resume-modal.active .resume-frame {
-  transform: none;
-  opacity: 1;
 }
 .resume-img {
   display: block;
@@ -161,159 +351,46 @@ a:hover { text-decoration: underline; }
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.18);
-  opacity: 0;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.25s ease, opacity 0.22s ease;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease, box-shadow 0.25s ease;
 }
-.resume-modal.active .resume-close { opacity: 1; }
 .resume-close:hover {
   transform: scale(1.08);
   background: #ffffff;
   box-shadow: 0 8px 22px rgba(0,0,0,0.24);
 }
 .resume-close:active { transform: scale(0.96); }
-.hiring { margin-top: 26px; }
+.hiring { margin-top: 16px; }
 .copyright { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: #999; }
 
-/* Reel video + lightbox */
-#reelVideo {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  border-radius: 4.5px;
-  vertical-align: bottom;
-  transform-origin: center center;
-  will-change: transform;
-}
-video::-webkit-media-controls-start-playback-button,
-video::-webkit-media-controls-overlay-play-button,
-video::-webkit-media-controls-play-button,
-video::-webkit-media-controls-panel,
-video::-webkit-media-controls { display: none !important; -webkit-appearance: none; }
-
-.reel-thumb {
-  position: fixed;
-  top: 24px;
-  right: 24px;
-  width: 180px;
-  overflow: hidden;
-  cursor: pointer;
-  line-height: 0;
-  border-radius: 4.5px;
-  background-color: var(--bg);
-  transform-origin: top right;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, opacity 0.45s ease, filter 0.45s ease;
-  z-index: 40;
-}
+/* Hover-dim: blur the rest of the page when the resume thumb is hovered. */
+body > * { transition: filter 0.45s ease; }
 @media (hover: hover) and (pointer: fine) {
-  .reel-thumb:hover { transform: scale(1.035); box-shadow: 0 8px 22px rgba(0,0,0,0.14); }
-}
-body > * { transition: filter 0.45s ease, opacity 0.45s ease; }
-@media (hover: hover) and (pointer: fine) {
-  body:has(.resume:hover) > *:not(.resume):not(.reel-lightbox):not(.resume-modal) { filter: blur(3px); opacity: 0.45; }
-  body:not(:has(.reel-lightbox.active)):has(.reel-thumb:hover) > *:not(.reel-thumb):not(.reel-lightbox) { filter: blur(3px); opacity: 0.45; }
+  body:has(.resume:hover) > *:not(.resume):not(.resume-modal):not(.cursor):not(.progress) { filter: blur(3px) opacity(0.45); }
 }
 
-.reel-lightbox {
-  position: fixed; inset: 0; z-index: 50;
-  display: none;
-  align-items: center; justify-content: center;
-}
-.reel-lightbox.active { display: flex; }
-.reel-backdrop {
-  position: absolute; inset: 0;
-  background: rgba(255,255,255,0.92);
-  opacity: 0;
-  transition: opacity 0.45s ease;
-}
-.reel-lightbox.active .reel-backdrop { opacity: 1; }
-
-.reel-stage {
-  position: relative;
-  z-index: 1;
-  width: min(72vw, 980px);
-  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.25));
-}
-.reel-controls {
-  display: none;
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--muted);
-  justify-content: space-between;
-  align-items: center;
-}
-.reel-lightbox.controls-on .reel-controls { display: flex; }
-.reel-actions { display: inline-flex; gap: 10px; }
-.reel-btn {
-  font: inherit; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer;
-}
-.reel-btn:hover { text-decoration: underline; }
-
-.caret {
-  display: inline-block;
-  width: 7px;
-  height: 1em;
-  background: var(--fg);
-  margin-left: 2px;
-  vertical-align: -1px;
-  animation: blink 1s steps(1) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-
-@media (max-width: 600px) {
-  .resume { display: none; }
-  .reel-thumb { width: 120px; top: 12px; right: 12px; }
-}
-
-
-/* --- Starter animation: center title -> shrink up -> content --- */
-html { -webkit-text-size-adjust: 100%; }
-html.js-typing body { opacity: 0; }
-
-/* The h1 is also the intro title. We start it absolutely centered & huge,
-   then JS writes "bahadir" letter-by-letter, then animates to the small top-left h1. */
+/* --- Intro hero: huge centered word -> slow shrink to the top heading --- */
+/* The h1 is the intro title. intro.ts reveals "bahadir", cycles color, then
+   animates font-size + top from big-centered to the small top heading (a single
+   fixed→absolute element, no transform-scale, so glyphs stay crisp). It starts
+   big and centered; JS sets `top` to vertically center it. */
 h1.intro-title {
   position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  top: 0;
+  left: 50%;
   margin: 0;
-  font-family: "Pixelify Sans", sans-serif;
+  font-family: var(--display);
   font-size: clamp(72px, 18vw, 220px);
   line-height: 1;
   font-weight: 400;
   letter-spacing: -0.01em;
   color: var(--fg);
+  white-space: nowrap;
+  transform: translateX(-50%);
   z-index: 100;
   pointer-events: none;
-  transform: translate(0, 0) scale(1);
-  transform-origin: center center;
-  transition: color 0.5s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), font-size 0.7s cubic-bezier(0.22, 1, 0.36, 1), letter-spacing 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform, font-size, letter-spacing, color;
-  white-space: nowrap;
 }
-h1.intro-title[data-step='0'] { color: #659287; }
-h1.intro-title[data-step='1'] { color: #88BDA4; }
-h1.intro-title[data-step='2'] { color: #B1D3B9; }
-h1.intro-title[data-step='3'] { color: #E6F2DD; }
-h1.intro-title.is-final { color: var(--fg); }
-/* When shrunk, slide it up to the natural h1 position (top of body) and shrink. */
-h1.intro-title.is-shrunk {
-  position: absolute;
-  inset: auto;
-  display: block;
-  top: 28px;
-  left: 50%;
-  font-size: 22px;
-  letter-spacing: 0;
-  margin: 0 0 28px;
-  text-align: center;
-  transform: translateX(-50%);
-  transform-origin: top center;
-}
-/* Caret: hidden until the shrink animation has fully completed. */
+
+/* Caret: hidden until the intro finishes, then blinks. */
 .caret {
   display: inline-block;
   width: 0.06em;
@@ -322,39 +399,253 @@ h1.intro-title.is-shrunk {
   margin-left: 0.04em;
   vertical-align: -0.12em;
   opacity: 0;
-  transform-origin: left center;
-  transition: opacity 0.2s ease, width 0.7s cubic-bezier(0.22, 1, 0.36, 1), height 0.7s cubic-bezier(0.22, 1, 0.36, 1), margin 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  animation: none;
 }
 .caret.is-visible { opacity: 1; }
 .caret.is-blinking { animation: caret-blink 1s steps(1) infinite; }
 @keyframes caret-blink { 50% { opacity: 0; } }
 
-/* Body content hidden until shrink finishes */
-body > *:not(h1.intro-title) { opacity: 0; transform: translateY(6px); transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-body.intro-up > *:not(h1.intro-title) { opacity: 1; transform: none; }
-body.intro-up > .intro:nth-of-type(1) { transition-delay: 0.05s; }
-body.intro-up > .intro:nth-of-type(2) { transition-delay: 0.13s; }
-body.intro-up > ul:nth-of-type(1) { transition-delay: 0.21s; }
-body.intro-up > h2 { transition-delay: 0.28s; }
-body.intro-up > ul:nth-of-type(2) { transition-delay: 0.35s; }
-body.intro-up > .hiring { transition-delay: 0.42s; }
-body.intro-up > p:last-of-type { transition-delay: 0.49s; }
-body.intro-up > .reel-thumb { transition-delay: 0.56s; }
-body.intro-up > .resume { transition-delay: 0.63s; }
+/* Hide the top h1 while the resume modal is open. */
+body:has(.resume-modal[aria-hidden="false"]) h1.intro-title { display: none; }
 
-@media (prefers-reduced-motion: reduce) {
-  h1.intro-title, h1.intro-title.is-shrunk { transition: none !important; }
-  body > *:not(h1.intro-title) { transition: none !important; transform: none !important; opacity: 1 !important; }
-  .caret { animation: none !important; }
+/* Custom cursor (activated by cursor.ts under pointer-fine + no-preference). */
+.cursor__dot, .cursor__ring {
+  position: fixed;
+  top: 0; left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9999;
+}
+.cursor__dot { width: 6px; height: 6px; background: var(--fg); }
+.cursor__ring { width: 34px; height: 34px; border: 1px solid var(--fg); }
+html.custom-cursor, html.custom-cursor * { cursor: none; }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+/* --- Scroll-progress bar --- */
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 9000;
+  pointer-events: none;
+}
+.progress__bar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--link);
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
-/* Hide the top h1 when the resume modal is open */
-body:has(.resume-modal.active) h1.intro-title { display: none; }
+/* --- Featured projects: pinned horizontal showcase (showcase.ts) --- */
+/* Full-height so nothing peeks behind it while it's pinned, but the cards sit
+   in the upper area (not dead-centre) so there isn't half a screen of dead space
+   between the bio and the featured row. */
+.showcase {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+}
+.showcase__track {
+  display: flex;
+  align-items: center;
+  height: auto;
+  gap: 7vw;
+  /* Smaller left inset so the intro + first card sit fully on-screen at rest;
+     top inset places the row just below the bio. */
+  padding: 20vh 8vw 0;
+  will-change: transform;
+}
+.card {
+  flex: 0 0 auto;
+  width: min(78vw, 460px);
+}
+.card--intro {
+  width: auto;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.showcase__label {
+  font-family: var(--display);
+  font-size: clamp(30px, 4.4vw, 56px);
+  line-height: 1;
+  color: var(--fg);
+}
+.showcase__hint {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.card__idx { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+.card__name {
+  font-family: var(--display);
+  font-size: clamp(34px, 4.8vw, 58px);
+  line-height: 1.02;
+  margin: 10px 0 18px;
+  color: var(--fg);
+}
+.card__name a { color: inherit; }
+.card__blurb { max-width: 380px; margin: 0; color: var(--ink); }
 
-/* Reduced motion: keep only a brief opacity fade for the resume modal */
+/* --- Blog: index list + article --- */
+.blog-index, .blog-article { padding-top: 20px; }
+.back {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.blog-index__title {
+  font-family: var(--display);
+  font-size: clamp(40px, 8vw, 64px);
+  margin: 0 0 40px;
+  color: var(--fg);
+}
+
+.blog-list { display: flex; flex-direction: column; gap: 56px; max-width: none; }
+.blog-post { max-width: none; margin: 0; }
+.blog-post__link {
+  display: block;
+  color: inherit;
+  background-image: none;
+}
+.blog-post__link:hover { background-image: none; }
+.blog-post__cover {
+  display: block;
+  width: 100%;
+  max-width: var(--container);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.blog-post__link:hover .blog-post__cover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.16);
+}
+.blog-post__meta { max-width: var(--container); margin-top: 18px; }
+.blog-post__date {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.blog-post__title {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(24px, 3.6vw, 34px);
+  line-height: 1.15;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fg);
+  margin: 0 0 10px;
+}
+.blog-post__title::after { content: none; }
+.blog-post__excerpt { margin: 0; color: var(--ink); max-width: 460px; }
+
+.blog-article__cover {
+  display: block;
+  width: 100%;
+  max-width: var(--container);
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  margin-bottom: 32px;
+}
+.blog-article__date {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.blog-article__title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1.15;
+  margin: 0 0 32px;
+  color: var(--fg);
+}
+.prose { max-width: var(--container); color: var(--ink); }
+.prose h2 {
+  font-family: var(--display);
+  font-size: 20px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fg);
+  margin: 36px 0 14px;
+}
+.prose h2::after { content: none; }
+.prose p { max-width: none; }
+.prose ul, .prose ol { max-width: none; margin: 0 0 16px; padding-left: 1.2em; list-style: revert; }
+.prose li { max-width: none; margin-bottom: 6px; }
+.prose img { max-width: 100%; border-radius: 8px; }
+.prose code { font-family: var(--mono); font-size: 0.9em; background: rgba(0,0,0,0.05); padding: 0.1em 0.35em; border-radius: 4px; }
+.prose blockquote { margin: 0 0 16px; padding-left: 16px; border-left: 2px solid rgba(0,0,0,0.14); color: var(--muted); }
+.prose blockquote p:last-child { margin-bottom: 0; }
+.prose hr { width: 100%; margin: 32px 0; }
+.prose table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+  width: max-content;
+  border-collapse: collapse;
+  margin: 0 0 24px;
+  font-size: 14px;
+}
+.prose th, .prose td {
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  text-align: left;
+  vertical-align: top;
+}
+.prose th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: normal; }
+
+/* --- Pre-hide animated content while JS is live (no flash before reveal). --- */
+html.js [data-reveal] { visibility: hidden; }
+html.js h1.intro-title { visibility: hidden; }
+
+@media (max-width: 600px) {
+  .resume { display: none; }
+  .blog-btn { display: none; }
+}
+
+/* Showcase falls back to a plain vertical list on touch / reduced motion
+   (showcase.ts skips the pin, so the track must not need a transform). */
+@media (max-width: 600px), (prefers-reduced-motion: reduce) {
+  .showcase { height: auto; overflow: visible; }
+  .showcase__track {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: 40px;
+    padding: 40px var(--gutter);
+    transform: none !important;
+  }
+  .card { width: auto; max-width: var(--container); }
+  .card__name { font-size: clamp(34px, 12vw, 56px); }
+}
+
+/* Reduced motion: show everything immediately; GSAP initializers also collapse
+   their durations to ~0 so functional UI (the resume modal) still opens instantly. */
 @media (prefers-reduced-motion: reduce) {
-  .resume-modal, .resume-modal.active { transition: opacity 0.01s linear, visibility 0s linear 0s; }
-  .resume-frame, .resume-modal.active .resume-frame { transform: none; transition: opacity 0.01s linear; }
-  .resume-close { transition: opacity 0.01s linear; }
+  html.js [data-reveal],
+  html.js h1.intro-title { visibility: visible !important; }
+  .caret { animation: none !important; }
+  a { transition: none !important; }
+  .progress { display: none; }
 }
